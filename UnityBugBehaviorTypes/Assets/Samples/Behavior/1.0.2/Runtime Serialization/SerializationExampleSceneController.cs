@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Community;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -44,7 +45,8 @@ namespace Unity.Behavior.SerializationExample
         // References
         [SerializeField] private GameObject m_agentPrefab;
         [SerializeField] private QueueSlot m_queueSlotPrefab;
-        [SerializeField] private int m_count = 10; 
+        [SerializeField] private int m_count = 10;
+        [SerializeField] private PersistentBehaviorData m_saveFile;
 
         // Serialization
         private List<GameObject> m_agents = new();
@@ -53,8 +55,7 @@ namespace Unity.Behavior.SerializationExample
         private RuntimeSerializationUtility.JsonBehaviorSerializer m_JsonSerializer = new();
 
         // Data Cache
-        private Dictionary<GameObject, Vector3> m_agentPositions = new();
-        private Dictionary<GameObject, string> m_serializedAgents = new();
+        [SerializeField] private GenericDictionary<GameObject, Vector3> m_agentPositions = new();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
@@ -102,13 +103,13 @@ namespace Unity.Behavior.SerializationExample
         [Button]
         private void Save()
         {
-            m_serializedAgents.Clear();
+            m_saveFile.m_behaviorData.Clear();
             m_agentPositions.Clear();
 
             foreach (var agent in m_agents)
             {
                 string data = agent.GetComponent<BehaviorGraphAgent>().Serialize(m_JsonSerializer, m_GameObjectResolver);
-                m_serializedAgents.Add(agent, data);
+                m_saveFile.m_behaviorData.Add(agent.name, data);
                 m_agentPositions.Add(agent, agent.transform.position);
             }
         }
@@ -118,7 +119,7 @@ namespace Unity.Behavior.SerializationExample
         {
             foreach (var agent in m_agents)
             {
-                if (m_serializedAgents.TryGetValue(agent, out var data))
+                if (m_saveFile.m_behaviorData.TryGetValue(agent.name, out var data))
                 {
                     agent.GetComponent<BehaviorGraphAgent>().Deserialize(data, m_JsonSerializer, m_GameObjectResolver);
                     agent.transform.position = m_agentPositions[agent];
