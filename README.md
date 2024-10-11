@@ -1,5 +1,5 @@
 
-<h1 align="center">unity-bug-behavior-types</h1>
+<h1 align="center">unity-behavior-bug-reports</h1>
 
 ## About
 
