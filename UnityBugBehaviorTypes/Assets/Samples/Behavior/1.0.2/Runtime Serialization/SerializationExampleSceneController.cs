@@ -74,6 +74,15 @@ namespace Unity.Behavior.SerializationExample
                 Load();
             }
         }
+        
+        private void Update()
+        {
+            // Quick and dirty game restart
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
 
         [Button]
         private void Save()
