@@ -67,15 +67,16 @@ namespace Unity.Behavior.SerializationExample
             GUI.Box(new Rect(5, 5, 150, 90), "Menu");
             if (GUI.Button(new Rect(10, 30, 130, 20), "Save"))
             {
-                SerializeAgents();
+                Save();
             }
             if (GUI.Button(new Rect(10, 60, 130, 20), "Load"))
             {
-                DeserializeAgents();
+                Load();
             }
         }
 
-        private void SerializeAgents()
+        [Button]
+        private void Save()
         {
             m_serializedAgents.Clear();
             m_agentPositions.Clear();
@@ -88,7 +89,8 @@ namespace Unity.Behavior.SerializationExample
             }
         }
 
-        private void DeserializeAgents()
+        [Button]
+        private void Load()
         {
             foreach (var agent in m_agents)
             {
