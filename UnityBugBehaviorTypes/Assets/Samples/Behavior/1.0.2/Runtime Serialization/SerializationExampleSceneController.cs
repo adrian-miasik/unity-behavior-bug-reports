@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Unity.Behavior.SerializationExample
@@ -40,13 +41,18 @@ namespace Unity.Behavior.SerializationExample
             }
         }
 
+        // References
         [SerializeField] private GameObject m_agentPrefab;
-        [SerializeField] private int m_count;
+        [SerializeField] private QueueSlot m_queueSlotPrefab;
+        [SerializeField] private int m_count = 10; 
 
+        // Serialization
         private List<GameObject> m_agents = new();
+        private List<GameObject> m_queueSlots = new();
         private GameObjectResolver m_GameObjectResolver = new();
         private RuntimeSerializationUtility.JsonBehaviorSerializer m_JsonSerializer = new();
 
+        // Data Cache
         private Dictionary<GameObject, Vector3> m_agentPositions = new();
         private Dictionary<GameObject, string> m_serializedAgents = new();
 
@@ -56,9 +62,18 @@ namespace Unity.Behavior.SerializationExample
             Random.InitState(0);
             for (int idx = 0; idx < m_count; ++idx)
             {
+                // Create agents
                 GameObject agent = Instantiate(m_agentPrefab, transform);
                 agent.name = $"Agent_{idx}";
                 m_agents.Add(agent);
+                
+                // Create queue slots
+                QueueSlot queueSlot = Instantiate(m_queueSlotPrefab, transform);
+                queueSlot.name = $"QueueSlot_{idx}";
+                m_queueSlots.Add(queueSlot.gameObject);
+                
+                // Assign queue slot to agent
+                agent.GetComponent<BehaviorGraphAgent>().SetVariableValue("Queue Slot", queueSlot);
             }
         }
 
