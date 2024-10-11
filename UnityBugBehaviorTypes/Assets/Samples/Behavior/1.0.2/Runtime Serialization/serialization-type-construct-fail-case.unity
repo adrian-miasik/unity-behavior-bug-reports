@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41542c29e8eb146a0a534afdef7a03be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_agentPrefab: {fileID: 736131581839544613, guid: e07c13f043cd54a6f8247ccdc3e70d68, type: 3}
+  m_agentPrefab: {fileID: 736131581839544613, guid: 03cc0976712708b4d82a9a853ddbe8d1, type: 3}
   m_queueSlotPrefab: {fileID: -1858969974920651782, guid: d04bf523e9576b14ebd768e69930fbc6, type: 3}
   m_count: 10
   m_saveFile: {fileID: 11400000, guid: 41ad482e145c4c041b4868f6cf896d57, type: 2}
