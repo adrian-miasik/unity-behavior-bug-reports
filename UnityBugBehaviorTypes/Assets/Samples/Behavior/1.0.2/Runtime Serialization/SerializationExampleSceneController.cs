@@ -101,5 +101,17 @@ namespace Unity.Behavior.SerializationExample
                 }
             }
         }
+
+        [Button]
+        private void PrintAgentGlobalObjectIDs()
+        {
+            if (m_agents.Count <= 0)
+            {
+                Debug.LogWarning("No agents found. Unable to print agent GlobalObjectID's.");
+                return;
+            }
+            
+            SerializationHelper.PrintGlobalObjectIDs(new List<Object>(m_agents));
+        }
     }
 }
