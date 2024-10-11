@@ -37,13 +37,17 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 - Might be an internal behavior package bug as `@Darren_Kelly` described: https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184/3
 
 ### Reproduction Steps
-- `// TODO`
-
+1. Open `serialization-type-construct-fail-case.unity` scene
+2. Enter Play Mode
+3. Press `Save` button
+4. Press `F5` hotkey to restart scene
+5. Press `Load` button
+6. Observe console for assertions
 
 ---
 
 ## Call Stacks
-### Issue #1:
+### Issue #1 - GlobalObjectID:
 ```
 InvalidOperationException: An error occured while deserializing asset reference GUID=[7a89880255e2246de83870fb9c1e9803]. Asset is not yet loaded and will result in a null reference.
 Unity.Behavior.Serialization.Json.DeserializationResult.Throw () (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:123)
@@ -52,8 +56,15 @@ Unity.Behavior.RuntimeSerializationUtility+JsonBehaviorSerializer.Deserialize (S
 Unity.Behavior.BehaviorGraphAgent.Deserialize[TSerializedFormat] (TSerializedFormat serialized, Unity.Behavior.RuntimeSerializationUtility+IBehaviorSerializer`1[TSerializedFormat] serializer, Unity.Behavior.RuntimeSerializationUtility+IUnityObjectResolver`1[TSerializedFormat] resolver) (at ./Library/PackageCache/com.unity.behavior/Runtime/Execution/Components/BehaviorGraphAgent.cs:359)
 Unity.Behavior.SerializationExample.SerializationExampleSceneController.Load () (at Assets/Samples/Behavior/1.0.2/Runtime Serialization/SerializationExampleSceneController.cs:124)
 Unity.Behavior.SerializationExample.SerializationExampleSceneController.OnGUI () (at Assets/Samples/Behavior/1.0.2/Runtime Serialization/SerializationExampleSceneController.cs:90)
-
 ```
 
-### Issue #2:
-- `// TODO`
+### Issue #2 - Type Construction Cast:
+```
+ArgumentException: Failed to construct type. Could not resolve type from TypeName=[Unity.Behavior.ComponentToComponentBlackboardVariable`2[[QueueSlot, Assembly-CSharp, QueueSlot, Assembly-CSharp]], Unity.Behavior].
+Unity.Behavior.Serialization.Json.DeserializationResult.Throw () (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:123)
+Unity.Behavior.Serialization.Json.JsonSerialization.FromJsonOverride[T] (System.String json, T& container, Unity.Behavior.Serialization.Json.JsonSerializationParameters parameters) (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:236)
+Unity.Behavior.RuntimeSerializationUtility+JsonBehaviorSerializer.Deserialize (System.String graphJson, Unity.Behavior.BehaviorGraph graph, Unity.Behavior.RuntimeSerializationUtility+IUnityObjectResolver`1[TSerializedFormat] resolver) (at ./Library/PackageCache/com.unity.behavior/Runtime/Utilities/RuntimeSerializationUtility.cs:139)
+Unity.Behavior.BehaviorGraphAgent.Deserialize[TSerializedFormat] (TSerializedFormat serialized, Unity.Behavior.RuntimeSerializationUtility+IBehaviorSerializer`1[TSerializedFormat] serializer, Unity.Behavior.RuntimeSerializationUtility+IUnityObjectResolver`1[TSerializedFormat] resolver) (at ./Library/PackageCache/com.unity.behavior/Runtime/Execution/Components/BehaviorGraphAgent.cs:359)
+Unity.Behavior.SerializationExample.SerializationExampleSceneController.Load () (at Assets/Samples/Behavior/1.0.2/Runtime Serialization/SerializationExampleSceneController.cs:124)
+Unity.Behavior.SerializationExample.SerializationExampleSceneController.OnGUI () (at Assets/Samples/Behavior/1.0.2/Runtime Serialization/SerializationExampleSceneController.cs:90)
+```
