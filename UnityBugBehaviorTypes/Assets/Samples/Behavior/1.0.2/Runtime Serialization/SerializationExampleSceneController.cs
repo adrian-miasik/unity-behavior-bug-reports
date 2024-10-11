@@ -127,7 +127,7 @@ namespace Unity.Behavior.SerializationExample
         }
         
         
-        [Button("Clear QueueSlots on all agents")]
+        [Button("Clear QueueSlots On All Agents")]
         private void ClearQueueSlotReferencesOnBehaviorAgents()
         {
             foreach (GameObject agent in m_agents)
@@ -140,7 +140,7 @@ namespace Unity.Behavior.SerializationExample
             }
         }
 
-        [Button]
+        [Button("Print Agent GlobalObjectID's")]
         private void PrintAgentGlobalObjectIDs()
         {
             if (m_agents.Count <= 0)
