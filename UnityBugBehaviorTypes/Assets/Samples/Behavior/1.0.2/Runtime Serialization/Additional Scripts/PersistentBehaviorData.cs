@@ -8,7 +8,7 @@ using UnityEngine;
     menuName = "Adrian Miasik/Create New 'Persistent BehaviorData'", order = 1)]
 public class PersistentBehaviorData : ScriptableObject
 {
-    [Button]
+    [Button("Wipe Behavior Data")]
     public void ClearBehaviorData()
     {
         m_behaviorData.Clear();
