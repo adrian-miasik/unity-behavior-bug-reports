@@ -125,6 +125,20 @@ namespace Unity.Behavior.SerializationExample
                 }
             }
         }
+        
+        
+        [Button("Clear QueueSlots on all agents")]
+        private void ClearQueueSlotReferencesOnBehaviorAgents()
+        {
+            foreach (GameObject agent in m_agents)
+            {
+                // Try fetch BehaviorGraphAgent
+                if (agent.TryGetComponent(out BehaviorGraphAgent bga))
+                {
+                    bga.SetVariableValue<QueueSlot>("Queue Slot", null);
+                }
+            }
+        }
 
         [Button]
         private void PrintAgentGlobalObjectIDs()
