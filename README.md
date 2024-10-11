@@ -29,12 +29,13 @@
 ---
 
 ### Issue #2 - Type Construction Cast - `// TODO: ISSUE TRACKER URL`
-- The second issue is related to being unable to construct a type for each custom property found within the saved JSON behavior graph data.
+- The second issue is related to loading/deserializing behavior graph data back into re-created GameObject as well, but this time is unable to construct a type for each custom property found within the saved JSON behavior graph data. Though I have come across this bug with built-in types too as mentioned in the thread.
 - Error: 
 ```
 ArgumentException: Failed to construct type. Could not resolve type from TypeName=[Unity.Behavior.ComponentToComponentBlackboardVariable`2[[UnityEngine.Transform, UnityEngine.CoreModule, UnityEngine.Transform, UnityEngine.CoreModule]], Unity.Behavior].` Rethrow as AggregateException: One or more errors occurred.
 ```
 - Might be an internal behavior package bug as `@Darren_Kelly` described: https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184/3
+- Possibly resolved in upcoming package v1.0.3
 
 ### Reproduction Steps
 1. Open `serialization-type-construct-fail-case.unity` scene
