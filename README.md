@@ -4,7 +4,7 @@
 ## About
 
 - This repository was created to highlight 2 issues I ran into using the new [Unity Behaviors](https://docs.unity3d.com/Packages/com.unity.behavior@1.0/manual/index.html) package. Specifically relating to serialization/deserialization of the behavior agent graphs.
-- This repo will submitted to Unity's issue tracker. Once the tickets are submitted, I'll update this README.md document linking back to those tickets so resolution can be tracked.
+- This repo will be submitted to Unity's issue tracker. Once the tickets are submitted, I'll update this README.md document linking back to those tickets so resolution can be tracked.
 - For more additional context see my [Unity discussion thread](https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184).
 
 ## Context
