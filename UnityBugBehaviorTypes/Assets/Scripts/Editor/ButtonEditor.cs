@@ -4,18 +4,16 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomEditor(typeof(MonoBehaviour), true)]
+    [CustomEditor(typeof(Object), true)]
     public class ButtonAttributeDrawer : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-
             // Fetch target
-            MonoBehaviour mono = (MonoBehaviour)target;
+            Object obj = target;
 
             // Fetch methods
-            MethodInfo[] methods = mono.GetType().GetMethods(BindingFlags.Instance |
+            MethodInfo[] methods = obj.GetType().GetMethods(BindingFlags.Instance |
                                                              BindingFlags.Static | 
                                                              BindingFlags.Public |
                                                              BindingFlags.NonPublic);
@@ -37,10 +35,12 @@ namespace Editor
                     if (GUILayout.Button(buttonName))
                     {
                         // Invoke method on clicks
-                        method.Invoke(mono, null);
+                        method.Invoke(obj, null);
                     }
                 }
             }
+            
+            base.OnInspectorGUI();
         }
     }
 }
