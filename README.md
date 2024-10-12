@@ -48,7 +48,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 ---
 
 ## Call Stacks
-### Issue #1 - GlobalObjectID:
+### Issue #1 - GlobalObjectID Mismatch:
 ```
 InvalidOperationException: An error occured while deserializing asset reference GUID=[7a89880255e2246de83870fb9c1e9803]. Asset is not yet loaded and will result in a null reference.
 Unity.Behavior.Serialization.Json.DeserializationResult.Throw () (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:123)
