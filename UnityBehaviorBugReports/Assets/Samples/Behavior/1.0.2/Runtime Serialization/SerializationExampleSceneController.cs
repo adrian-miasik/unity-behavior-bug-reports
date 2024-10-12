@@ -117,6 +117,13 @@ namespace Unity.Behavior.SerializationExample
         [Button]
         private void Load()
         {
+            if (m_saveFile.m_behaviorData.Count <= 0)
+            {
+                Debug.LogWarning("No save data found. Make sure to create save data by pressing the 'Save' button " +
+                                 "during runtime before trying to load.");
+                return;
+            }
+            
             foreach (var agent in m_agents)
             {
                 if (m_saveFile.m_behaviorData.TryGetValue(agent.name, out var data))
