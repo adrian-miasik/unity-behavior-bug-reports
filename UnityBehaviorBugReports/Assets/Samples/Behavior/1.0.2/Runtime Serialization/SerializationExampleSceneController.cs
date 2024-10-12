@@ -1,5 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Community;
+using Newtonsoft.Json.Linq;
+using Unity.Properties;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -56,6 +60,7 @@ namespace Unity.Behavior.SerializationExample
 
         // Data Cache
         [SerializeField] private GenericDictionary<GameObject, Vector3> m_agentPositions = new();
+        private bool m_savedThisSession;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
@@ -112,6 +117,8 @@ namespace Unity.Behavior.SerializationExample
                 m_saveFile.m_behaviorData.Add(agent.name, data);
                 m_agentPositions.Add(agent, agent.transform.position);
             }
+
+            m_savedThisSession = true;
         }
 
         [Button]
@@ -123,6 +130,18 @@ namespace Unity.Behavior.SerializationExample
                                  "during runtime before trying to load.");
                 return;
             }
+
+            if (!m_savedThisSession)
+            {
+                Debug.Log("Printing save data GlobalObjectID's...");
+                PrintJSONGlobalObjectIDs();
+
+                Debug.Log("Printing current agent GlobalObjectIDs...");
+                List<string> currentIDs = new(PrintAgentGlobalObjectIDs());
+
+                Debug.Log("Now replacing save data GlobalObjectID's with current GlobalObjectIDs...");
+                ReplaceJSONGlobalObjectIDs(currentIDs);
+            }
             
             foreach (var agent in m_agents)
             {
@@ -133,7 +152,135 @@ namespace Unity.Behavior.SerializationExample
                 }
             }
         }
-        
+
+        private void PrintJSONGlobalObjectIDs()
+        {
+            // Allocate
+            List<string> globalObjectIDs = new();
+            
+            // Iterate through each saved agents behavior graph JSON data...
+            foreach (string behaviorJSON in m_saveFile.m_behaviorData.Values)
+            {
+                ExtractGlobalObjectIDsFromJObject(JObject.Parse(behaviorJSON), globalObjectIDs);
+            }
+
+            // Iterate through each found JSON GlobalObjectID...
+            foreach (string globalObjectID in globalObjectIDs)
+            {
+                // If found JSON GlobalObjectID can't be converted to GlobalObjectId struct...
+                if (!GlobalObjectId.TryParse(globalObjectID, out GlobalObjectId id))
+                {
+                    Debug.LogWarning("The following string could not be converted to a GlobalObjectId struct: " + 
+                                     globalObjectID);
+                }
+                // Otherwise, GlobalObjectId struct is valid...
+                else
+                {
+                    // Print
+                    Debug.Log(id);
+                }
+            }
+        }
+
+        private void ExtractGlobalObjectIDsFromJObject(JToken token, List<string> result)
+        {
+            // Verify
+            if (token == null)
+            {
+                Debug.LogWarning("Provided JToken is null. Unable to extract properties.");
+                return;
+            }
+
+            if (token is JObject jObj)
+            {
+                foreach (KeyValuePair<string, JToken> kvp in jObj)
+                {
+                    if (kvp.Key == "m_Value" && kvp.Value.Type == JTokenType.String)
+                    {
+                        string value = kvp.Value.ToString();
+
+                        if (value.StartsWith("GlobalObjectId"))
+                        {
+                            result.Add(value);
+                        }
+                    }
+                
+                    // Recursively iterate through the rest of the objects values
+                    ExtractGlobalObjectIDsFromJObject(kvp.Value, result);
+                }
+            }
+            else if (token is JArray jArray)
+            {
+                foreach (JToken item in jArray)
+                {
+                    // Recursively iterate through the rest of the array value
+                    ExtractGlobalObjectIDsFromJObject(item, result);
+                }
+            }
+        }
+
+        private void ReplaceJSONGlobalObjectIDs(List<string> currentIDs)
+        {
+            // Iterate through each saved agents behavior graph JSON data...
+            for (int i = 0; i < m_saveFile.m_behaviorData.Values.Count; i++)
+            {
+                // Fetch JSON for agent...
+                string behaviorJSON = m_saveFile.m_behaviorData.Values.ElementAt(i);
+                
+                // Replace first occuring GlobalObjectID with provided GlobalObjectID.
+                string replacedBehaviorJSON = ReplaceGlobalObjectIDInJObject(JObject.Parse(behaviorJSON), 
+                    currentIDs[i]);
+                
+                // Save updated JSON back into save file...
+                m_saveFile.m_behaviorData[m_agents[i].name] = replacedBehaviorJSON;
+            }
+        }
+
+        private string ReplaceGlobalObjectIDInJObject(JToken token, string replacementID)
+        {
+            // Verify
+            if (token == null)
+            {
+                Debug.LogWarning("Provided JToken is null. Unable to extract properties.");
+                return "{}"; // Empty JSON
+            }
+            
+            if (token is JObject jObj)
+            {
+                foreach (KeyValuePair<string, JToken> kvp in jObj)
+                {
+                    if (kvp.Key == "m_Value" && kvp.Value.Type == JTokenType.String)
+                    {
+                        string value = kvp.Value.ToString();
+
+                        if (value.StartsWith("GlobalObjectId"))
+                        {
+                            Debug.Log("Attempting to replace '" + kvp.Value + "' with new id of: '" + 
+                                      replacementID + "'.");
+                            
+                            jObj[kvp.Key] = new JValue(replacementID);
+
+                            Debug.Log("Value has been replaced and is now: " + jObj[kvp.Key]);
+
+                            break;
+                        }
+                    }
+                    
+                    // Recursively iterate through the rest of the objects values
+                    ReplaceGlobalObjectIDInJObject(kvp.Value, replacementID);
+                }
+            }
+            else if (token is JArray jArray)
+            {
+                foreach (JToken item in jArray)
+                {
+                    // Recursively iterate through the rest of the array value
+                    ReplaceGlobalObjectIDInJObject(item, replacementID);
+                }
+            }
+
+            return token.ToString();
+        }
         
         [Button("Clear QueueSlots On All Agents")]
         private void ClearQueueSlotReferencesOnBehaviorAgents()
@@ -149,15 +296,15 @@ namespace Unity.Behavior.SerializationExample
         }
 
         [Button("Print Agent GlobalObjectID's")]
-        private void PrintAgentGlobalObjectIDs()
+        private List<string> PrintAgentGlobalObjectIDs()
         {
             if (m_agents.Count <= 0)
             {
                 Debug.LogWarning("No agents found. Unable to print agent GlobalObjectID's.");
-                return;
+                return new();
             }
             
-            SerializationHelper.PrintGlobalObjectIDs(new List<Object>(m_agents));
+            return SerializationHelper.PrintGlobalObjectIDs(new List<Object>(m_agents));
         }
     }
 }

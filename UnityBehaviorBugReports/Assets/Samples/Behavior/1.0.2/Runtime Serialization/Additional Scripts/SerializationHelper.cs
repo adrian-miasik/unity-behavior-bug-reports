@@ -32,12 +32,18 @@ public static class SerializationHelper
         Debug.Log(report.ToString());
     }
 
-    public static void PrintGlobalObjectIDs(List<Object> objects)
+    public static List<string> PrintGlobalObjectIDs(List<Object> objects)
     {
+        List<string> results = new();
+        
         foreach (Object o in objects)
         {
             GlobalObjectId globalID = GlobalObjectId.GetGlobalObjectIdSlow(o);
             Debug.Log($"Object: {o}, GlobalObjectID: {globalID}", o);
+            
+            results.Add(globalID.ToString());
         }
+
+        return results;
     }
 }
