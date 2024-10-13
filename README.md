@@ -49,7 +49,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 
 ## Call Stacks
 ### Issue #1 - GlobalObjectID Mismatch:
-```
+```C#
 InvalidOperationException: An error occured while deserializing asset reference GUID=[7a89880255e2246de83870fb9c1e9803]. Asset is not yet loaded and will result in a null reference.
 Unity.Behavior.Serialization.Json.DeserializationResult.Throw () (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:123)
 Unity.Behavior.Serialization.Json.JsonSerialization.FromJsonOverride[T] (System.String json, T& container, Unity.Behavior.Serialization.Json.JsonSerializationParameters parameters) (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:236)
@@ -60,7 +60,7 @@ Unity.Behavior.SerializationExample.SerializationExampleSceneController.OnGUI ()
 ```
 
 ### Issue #2 - Type Construction Cast:
-```
+```C#
 ArgumentException: Failed to construct type. Could not resolve type from TypeName=[Unity.Behavior.ComponentToComponentBlackboardVariable`2[[QueueSlot, Assembly-CSharp, QueueSlot, Assembly-CSharp]], Unity.Behavior].
 Unity.Behavior.Serialization.Json.DeserializationResult.Throw () (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:123)
 Unity.Behavior.Serialization.Json.JsonSerialization.FromJsonOverride[T] (System.String json, T& container, Unity.Behavior.Serialization.Json.JsonSerializationParameters parameters) (at ./Library/PackageCache/com.unity.behavior/com.unity.serialization/Runtime/Unity.Serialization/Json/JsonSerialization+FromJson.cs:236)
