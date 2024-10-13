@@ -119,6 +119,8 @@ namespace Unity.Behavior.SerializationExample
             }
 
             m_savedThisSession = true;
+            
+            PrintJSONGlobalObjectIDs();
         }
 
         [Button]
@@ -153,6 +155,7 @@ namespace Unity.Behavior.SerializationExample
             }
         }
 
+        [Button]
         private void PrintJSONGlobalObjectIDs()
         {
             // Allocate
@@ -176,8 +179,17 @@ namespace Unity.Behavior.SerializationExample
                 // Otherwise, GlobalObjectId struct is valid...
                 else
                 {
-                    // Print
-                    Debug.Log(id);
+                    Object obj = GlobalObjectId.GlobalObjectIdentifierToObjectSlow(id);
+
+                    if (obj != null)
+                    {
+                        // Print
+                        Debug.Log("'" + id + "' is " + obj.name, obj);
+                    }
+                    else
+                    {
+                        Debug.Log(id);
+                    }
                 }
             }
         }
