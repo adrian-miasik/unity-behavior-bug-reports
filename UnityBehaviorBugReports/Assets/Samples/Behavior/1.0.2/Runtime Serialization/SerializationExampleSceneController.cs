@@ -136,8 +136,8 @@ namespace Unity.Behavior.SerializationExample
                 Debug.Log("Printing save data GlobalObjectID's...");
                 PrintJSONGlobalObjectIDs();
 
-                Debug.Log("Printing current agent GlobalObjectIDs...");
-                List<string> currentIDs = new(PrintAgentGlobalObjectIDs());
+                Debug.Log("Printing current QueueSlot GlobalObjectIDs...");
+                List<string> currentIDs = PrintQueueSlotGlobalObjectIDs();
 
                 Debug.Log("Now replacing save data GlobalObjectID's with current GlobalObjectIDs...");
                 ReplaceJSONGlobalObjectIDs(currentIDs);
@@ -295,16 +295,21 @@ namespace Unity.Behavior.SerializationExample
             }
         }
 
-        [Button("Print Agent GlobalObjectID's")]
-        private List<string> PrintAgentGlobalObjectIDs()
+        private List<string> PrintGlobalObjectIDs(List<Object> objects)
         {
-            if (m_agents.Count <= 0)
+            if (objects.Count <= 0)
             {
-                Debug.LogWarning("No agents found. Unable to print agent GlobalObjectID's.");
+                Debug.LogWarning("Unable to print GlobalObjectID's. No provided objects found.");
                 return new();
             }
-            
-            return SerializationHelper.PrintGlobalObjectIDs(new List<Object>(m_agents));
+
+            return SerializationHelper.PrintGlobalObjectIDs(objects);
+        }
+
+        [Button("Print QueueSlot GlobalObjectID's")]
+        private List<string> PrintQueueSlotGlobalObjectIDs()
+        {
+            return PrintGlobalObjectIDs(new List<Object>(m_queueSlots));
         }
     }
 }
