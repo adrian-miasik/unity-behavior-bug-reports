@@ -39,7 +39,7 @@ public static class SerializationHelper
         foreach (Object o in objects)
         {
             GlobalObjectId globalID = GlobalObjectId.GetGlobalObjectIdSlow(o);
-            Debug.Log($"Object: {o}, GlobalObjectID: {globalID}", o);
+            Debug.Log($"'{globalID}' is {o}", o);
             
             results.Add(globalID.ToString());
         }
