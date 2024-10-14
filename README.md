@@ -28,7 +28,7 @@
 
 ---
 
-### Issue #2 - [IN-86387 - Type Construction Cast](https://unity3d.atlassian.net/servicedesk/customer/portal/2/IN-86387)
+### Issue #2 - [IN-86387 - Type Construction Cast](https://unity3d.atlassian.net/servicedesk/customer/portal/2/IN-86387) -> RESOLVED IN PACKAGE `V1.0.3`
 - The second issue is related to loading/deserializing behavior graph data back into re-created GameObject as well, but this time is unable to construct a type for each custom property found within the saved JSON behavior graph data. Though I have come across this bug with built-in types too as mentioned in the thread.
 - Error: 
 ```
