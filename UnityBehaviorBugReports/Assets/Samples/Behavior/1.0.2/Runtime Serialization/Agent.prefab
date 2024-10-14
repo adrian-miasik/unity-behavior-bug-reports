@@ -123,14 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: 4657899375045673837, guid: 47e19246090baff478e9f9c45f323d86, type: 2}
+  m_Graph: {fileID: -5564848208971985025, guid: 47e19246090baff478e9f9c45f323d86, type: 2}
   m_BlackboardVariableOverridesList:
-  - rid: 4217738984822932267
-  NetcodeRunOnlyOnOwner: 0
+  - rid: 5610568479349408080
   references:
     version: 2
     RefIds:
-    - rid: 4217738984822932267
+    - rid: 5610568479349408080
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
