@@ -19,6 +19,7 @@
 - Seems to happen due to a mismatch of GlobalObjectID. See thread for additional information and my proposed solution/workaround.
 
 ### Reproduction Steps
+0. Checkout commit https://github.com/adrian-miasik/unity-behavior-bug-reports/releases/tag/bug-1
 1. Open `serialization-global-object-id-case.unity` scene
 2. Enter Play Mode
 3. Press `Save` button
@@ -38,6 +39,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 - Possibly resolved in upcoming package v1.0.3
 
 ### Reproduction Steps
+0. Checkout commit https://github.com/adrian-miasik/unity-behavior-bug-reports/releases/tag/bug-2
 1. Open `serialization-type-construct-fail-case.unity` scene
 2. Enter Play Mode
 3. Press `Save` button
