@@ -1,9 +1,12 @@
 
 <h1 align="center">unity-behavior-bug-reports</h1>
 
+- All issues have been resolved as of `2024-10-15`
+- https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184
+
 ## About
 
-- This repository was created to highlight 2 issues I ran into using the new [Unity Behaviors](https://docs.unity3d.com/Packages/com.unity.behavior@1.0/manual/index.html) package. Specifically relating to serialization/deserialization of the behavior agent graphs.
+- This repository was created to highlight issues I ran into using the new [Unity Behaviors](https://docs.unity3d.com/Packages/com.unity.behavior@1.0/manual/index.html) package. Specifically relating to serialization/deserialization of the behavior agent graphs.
 - This repo will be submitted to Unity's issue tracker. Once the tickets are submitted, I'll update this README.md document linking back to those tickets so resolution can be tracked.
 - For more additional context see my [Unity discussion thread](https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184).
 
@@ -12,13 +15,14 @@
 - **Package:** `com.unity.behavior` - `v1.0.2`
 
 ## Bugs
-### Issue #1 - [IN-86386 - GlobalObjectID Mismatch](https://unity3d.atlassian.net/servicedesk/customer/portal/2/IN-86386)
+### Issue #1 - [IN-86386 - GlobalObjectID Mismatch](https://unity3d.atlassian.net/servicedesk/customer/portal/2/IN-86386) -> USER ERROR
 - The first issue is related to loading/deserializing behavior graph data back into re-created GameObjects.
 - Error:
 ```InvalidOperationException: An error occured while deserializing asset reference GUID=[7a89880255e2246de83870fb9c1e9803]. Asset is not yet loaded and will result in a null reference.```
 - Seems to happen due to a mismatch of GlobalObjectID. See thread for additional information and my proposed solution/workaround.
 
 ### Reproduction Steps
+0. Checkout commit https://github.com/adrian-miasik/unity-behavior-bug-reports/releases/tag/bug-1
 1. Open `serialization-global-object-id-case.unity` scene
 2. Enter Play Mode
 3. Press `Save` button
@@ -38,6 +42,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 - Possibly resolved in upcoming package v1.0.3
 
 ### Reproduction Steps
+0. Checkout commit https://github.com/adrian-miasik/unity-behavior-bug-reports/releases/tag/bug-2
 1. Open `serialization-type-construct-fail-case.unity` scene
 2. Enter Play Mode
 3. Press `Save` button
