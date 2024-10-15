@@ -1,6 +1,9 @@
 
 <h1 align="center">unity-behavior-bug-reports</h1>
 
+- All issues have been resolved as of `2024-10-15`
+- https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184
+
 ## About
 
 - This repository was created to highlight issues I ran into using the new [Unity Behaviors](https://docs.unity3d.com/Packages/com.unity.behavior@1.0/manual/index.html) package. Specifically relating to serialization/deserialization of the behavior agent graphs.
