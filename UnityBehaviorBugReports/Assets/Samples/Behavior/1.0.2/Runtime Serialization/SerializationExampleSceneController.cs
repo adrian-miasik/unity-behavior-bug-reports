@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Community;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -50,7 +49,7 @@ namespace Unity.Behavior.SerializationExample
 
         // Serialization
         private List<GameObject> m_agents = new();
-        private List<GameObject> m_queueSlots = new();
+        private List<QueueSlot> m_queueSlots = new();
         private GameObjectResolver m_GameObjectResolver = new();
         private RuntimeSerializationUtility.JsonBehaviorSerializer m_JsonSerializer = new();
         
@@ -68,7 +67,7 @@ namespace Unity.Behavior.SerializationExample
                 // Create queue slots
                 QueueSlot queueSlot = Instantiate(m_queueSlotPrefab, transform);
                 queueSlot.name = $"QueueSlot_{idx}";
-                m_queueSlots.Add(queueSlot.gameObject);
+                m_queueSlots.Add(queueSlot);
                 
                 // Assign queue slot to agent
                 agent.GetComponent<BehaviorGraphAgent>().SetVariableValue("Queue Slot", queueSlot);
@@ -103,11 +102,24 @@ namespace Unity.Behavior.SerializationExample
             m_saveFile.m_behaviorData.Clear();
             m_saveFile.m_agentPositions.Clear();
 
-            foreach (var agent in m_agents)
+            for (int i = 0; i < m_agents.Count; i++)
             {
-                string data = agent.GetComponent<BehaviorGraphAgent>().Serialize(m_JsonSerializer, m_GameObjectResolver);
-                m_saveFile.m_behaviorData.Add(agent.name, data);
-                m_saveFile.m_agentPositions.Add(agent.name, agent.transform.position);
+                // Fetch 
+                GameObject agent = m_agents[i];
+                
+                if (agent.TryGetComponent(out BehaviorGraphAgent bga))
+                {
+                    // Clear
+                    bga.SetVariableValue<QueueSlot>("Queue Slot", null);
+
+                    // Save
+                    string data = bga.Serialize(m_JsonSerializer, m_GameObjectResolver);
+                    m_saveFile.m_behaviorData.Add(agent.name, data);
+                    m_saveFile.m_agentPositions.Add(agent.name, agent.transform.position);
+
+                    // Re-populate
+                    bga.SetVariableValue("Queue Slot", m_queueSlots[i]);
+                }
             }
         }
 
@@ -126,8 +138,15 @@ namespace Unity.Behavior.SerializationExample
                 GameObject agent = m_agents[index];
                 if (m_saveFile.m_behaviorData.TryGetValue(agent.name, out var data))
                 {
-                    agent.GetComponent<BehaviorGraphAgent>().Deserialize(data, m_JsonSerializer, m_GameObjectResolver);
-                    agent.transform.position = m_saveFile.m_agentPositions[agent.name];
+                    if (agent.TryGetComponent(out BehaviorGraphAgent bga))
+                    {
+                        // Load
+                        bga.Deserialize(data, m_JsonSerializer, m_GameObjectResolver);
+                        
+                        // Populate
+                        agent.transform.position = m_saveFile.m_agentPositions[agent.name];
+                        bga.SetVariableValue("Queue Slot", m_queueSlots[index]);
+                    }
                 }
             }
         }
