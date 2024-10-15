@@ -151,7 +151,6 @@ namespace Unity.Behavior.SerializationExample
             }
         }
         
-        
         [Button("Clear QueueSlots On All Agents")]
         private void ClearQueueSlotReferencesOnBehaviorAgents()
         {
