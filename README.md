@@ -2,7 +2,7 @@
 <h1 align="center">unity-behavior-bug-reports</h1>
 
 - All issues have been resolved as of `2024-10-15`
-- https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184
+  - https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184
 
 ## About
 
