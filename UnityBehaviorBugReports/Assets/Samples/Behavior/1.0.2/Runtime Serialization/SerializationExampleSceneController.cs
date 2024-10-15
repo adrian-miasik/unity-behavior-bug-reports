@@ -53,10 +53,7 @@ namespace Unity.Behavior.SerializationExample
         private List<GameObject> m_queueSlots = new();
         private GameObjectResolver m_GameObjectResolver = new();
         private RuntimeSerializationUtility.JsonBehaviorSerializer m_JsonSerializer = new();
-
-        // Data Cache
-        [SerializeField] private GenericDictionary<GameObject, Vector3> m_agentPositions = new();
-
+        
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
@@ -104,13 +101,13 @@ namespace Unity.Behavior.SerializationExample
         private void Save()
         {
             m_saveFile.m_behaviorData.Clear();
-            m_agentPositions.Clear();
+            m_saveFile.m_agentPositions.Clear();
 
             foreach (var agent in m_agents)
             {
                 string data = agent.GetComponent<BehaviorGraphAgent>().Serialize(m_JsonSerializer, m_GameObjectResolver);
                 m_saveFile.m_behaviorData.Add(agent.name, data);
-                m_agentPositions.Add(agent, agent.transform.position);
+                m_saveFile.m_agentPositions.Add(agent.name, agent.transform.position);
             }
         }
 
@@ -123,13 +120,14 @@ namespace Unity.Behavior.SerializationExample
                                  "during runtime before trying to load.");
                 return;
             }
-            
-            foreach (var agent in m_agents)
+
+            for (int index = 0; index < m_agents.Count; index++)
             {
+                GameObject agent = m_agents[index];
                 if (m_saveFile.m_behaviorData.TryGetValue(agent.name, out var data))
                 {
                     agent.GetComponent<BehaviorGraphAgent>().Deserialize(data, m_JsonSerializer, m_GameObjectResolver);
-                    agent.transform.position = m_agentPositions[agent];
+                    agent.transform.position = m_saveFile.m_agentPositions[agent.name];
                 }
             }
         }

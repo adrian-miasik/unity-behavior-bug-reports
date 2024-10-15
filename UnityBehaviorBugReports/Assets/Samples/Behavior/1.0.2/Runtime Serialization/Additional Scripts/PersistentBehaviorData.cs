@@ -13,7 +13,16 @@ public class PersistentBehaviorData : ScriptableObject
     {
         m_behaviorData.Clear();
     }
+
+    [Button("Wipe Agent Position Data")]
+    public void ClearAgentPositionData()
+    {
+        m_agentPositions.Clear();
+    }
     
     // First string represents object name, second string represents behavior graph JSON.
     public GenericDictionary<string, string> m_behaviorData = new();
+    
+    // First string represents object name, vector3 represents world position.
+    public GenericDictionary<string, Vector3> m_agentPositions = new();
 }
