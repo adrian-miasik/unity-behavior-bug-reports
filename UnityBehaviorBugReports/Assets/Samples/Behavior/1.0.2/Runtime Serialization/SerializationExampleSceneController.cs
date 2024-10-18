@@ -136,7 +136,7 @@ namespace Unity.Behavior.SerializationExample
                     bga.SetVariableValue<QueueSlot>("Queue Slot", null);
 
                     Debug.Log(nameof(AgentNavigatesToLocationWhileLookingAtQueueBaseAction) + " node still contains " +
-                              "a reference to a base class 'QueueBase' even when the QueueSlot variable (which" +
+                              "a reference to a base class 'QueueBase' even when the QueueSlot variable (which " +
                               "derives from QueueBase) has been cleared/set to null.");
 
                     // Save
