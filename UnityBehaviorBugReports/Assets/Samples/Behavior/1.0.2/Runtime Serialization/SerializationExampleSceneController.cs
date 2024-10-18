@@ -52,6 +52,8 @@ namespace Unity.Behavior.SerializationExample
         private List<QueueSlot> m_queueSlots = new();
         private GameObjectResolver m_GameObjectResolver = new();
         private RuntimeSerializationUtility.JsonBehaviorSerializer m_JsonSerializer = new();
+
+        private bool isTimePaused;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
@@ -72,6 +74,9 @@ namespace Unity.Behavior.SerializationExample
                 // Assign queue slot to agent
                 agent.GetComponent<BehaviorGraphAgent>().SetVariableValue("Queue Slot", queueSlot);
             }
+
+            isTimePaused = false;
+            Time.timeScale = 1;
         }
 
         private void OnGUI()
@@ -92,7 +97,25 @@ namespace Unity.Behavior.SerializationExample
             // Quick and dirty game restart
             if (Input.GetKeyDown(KeyCode.F5))
             {
+                Debug.Log("Restarting...");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
+            // Pause toggle
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                isTimePaused = !isTimePaused; // Flip
+
+                if (isTimePaused)
+                {
+                    Debug.Log("Paused.");
+                    Time.timeScale = 0;
+                }
+                else
+                {
+                    Debug.Log("Resumed.");
+                    Time.timeScale = 1;
+                }
             }
         }
 
