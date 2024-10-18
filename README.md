@@ -51,7 +51,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 
 ### Issue #3 - Incorrect Node States Upon Deserialization: TODO UNITY TICKET
 - Third issue is related to loading/deserializing behavior graph data in _either_ a original/re-created GameObject.
-- No specific error, but the behavior graph is unable to progress along the branch/move on to the next node action after loading. Where if you didn't load the behavior graph, the branch would complete/move through all nodes. (E.G. below is provided. Notice navigation action state)
+- No specific error, but the behavior graph is unable to progress along the branch/move on to the next node action after loading. Where if you didn't load the behavior graph, the branch would complete/move through all nodes. (E.G. provided below. Notice navigation action state)
 - Original:
 <p align="center">
   <img src="https://github.com/user-attachments/assets/822fa0dc-e16e-4e1b-a03c-c25b6505517a" width="500">
