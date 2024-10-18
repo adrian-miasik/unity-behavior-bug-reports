@@ -1,9 +1,6 @@
 
 <h1 align="center">unity-behavior-bug-reports</h1>
 
-- All issues have been resolved as of `2024-10-15`
-  - https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184
-
 ## About
 
 - This repository was created to highlight issues I ran into using the new [Unity Behaviors](https://docs.unity3d.com/Packages/com.unity.behavior@1.0/manual/index.html) package. Specifically relating to serialization/deserialization of the behavior agent graphs.
@@ -52,6 +49,33 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 
 ---
 
+### Issue #3 - Incorrect Node States Upon Deserialization: UNITY TICKET
+- Third issue is related to loading/deserializing behavior graph data in _either_ a original/re-created GameObject.
+- No specific error, but the behavior graph is unable to progress along the branch/move on to the next node action after loading. Where if you didn't load the behavior graph, the branch would complete/move through all nodes. (E.G. below is provided. Notice navigation action state)
+- Original:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/822fa0dc-e16e-4e1b-a03c-c25b6505517a" width="500">
+</p>
+
+- Loaded:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e14de308-9e48-4b8d-9f6a-63631c63887d" width="500">
+</p>
+- See thread comment for additional details: TODO
+
+### Reproduction Steps
+0. Checkout commit https://github.com/adrian-miasik/unity-behavior-bug-reports/releases/tag/bug-3
+1. Open `serialization-incorrect-status-upon-loading-case` scene
+2. Enter Play Mode
+3. Press `Save` button before agents reach their target positions.
+4. Press `Load` button before agents reach their target positions.
+5. Observe console for lack of logs. (See behavior graph debug mode)
+
+Note: I've added a pause toggle (ESC key) so you can investigate the graph debug mode while game is running but not progressing.
+
+---
+
+
 ## Call Stacks
 ### Issue #1 - GlobalObjectID Mismatch:
 ```C#
@@ -74,3 +98,7 @@ Unity.Behavior.BehaviorGraphAgent.Deserialize[TSerializedFormat] (TSerializedFor
 Unity.Behavior.SerializationExample.SerializationExampleSceneController.Load () (at Assets/Samples/Behavior/1.0.2/Runtime Serialization/SerializationExampleSceneController.cs:124)
 Unity.Behavior.SerializationExample.SerializationExampleSceneController.OnGUI () (at Assets/Samples/Behavior/1.0.2/Runtime Serialization/SerializationExampleSceneController.cs:90)
 ```
+---
+
+### Issue #3 - TODO
+- Not applicable. See behavior graph screenshots.
