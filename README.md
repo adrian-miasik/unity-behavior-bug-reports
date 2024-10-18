@@ -61,7 +61,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e14de308-9e48-4b8d-9f6a-63631c63887d" width="500">
 </p>
-- See thread comment for additional details: TODO
+- See thread comment for additional details: https://discussions.unity.com/t/behavior-errors-deserializing-behaviorgraph-json-after-re-creating-related-gameobjects/1534184/19
 
 ### Reproduction Steps
 0. Checkout commit https://github.com/adrian-miasik/unity-behavior-bug-reports/releases/tag/bug-3
