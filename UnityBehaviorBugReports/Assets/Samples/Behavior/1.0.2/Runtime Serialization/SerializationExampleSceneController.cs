@@ -135,6 +135,10 @@ namespace Unity.Behavior.SerializationExample
                     // Clear
                     bga.SetVariableValue<QueueSlot>("Queue Slot", null);
 
+                    Debug.Log(nameof(AgentNavigatesToLocationWhileLookingAtQueueBaseAction) + " node still contains " +
+                              "a reference to a base class 'QueueBase' even when the QueueSlot variable (which" +
+                              "derives from QueueBase) has been cleared/set to null.");
+
                     // Save
                     string data = bga.Serialize(m_JsonSerializer, m_GameObjectResolver);
                     m_saveFile.m_behaviorData.Add(agent.name, data);

@@ -6,20 +6,17 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Agent navigates to location while looking at QueueSlot",
-    story: "[Agent] navigates to [location] while looking at [QueueSlot]", category: "Action",
-    id: "955bce537bc45f0af9e504726b1c3d13")]
-public partial class AgentNavigatesToLocationWhileLookingAtQueueSlotAction : Action
+[NodeDescription(name: "Agent navigates to location while looking at QueueBase", story: "[Agent] navigates to [location] while looking at [QueueBase]", category: "Action", id: "955bce537bc45f0af9e504726b1c3d13")]
+public partial class AgentNavigatesToLocationWhileLookingAtQueueBaseAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<Vector3> Location;
+    [SerializeReference] public BlackboardVariable<QueueBase> QueueBase;
     [SerializeReference] public BlackboardVariable<float> Speed = new(1.0f);
     [SerializeReference] public BlackboardVariable<float> DistanceThreshold = new(0.2f);
 
     [SerializeReference]
     public BlackboardVariable<string> AnimatorSpeedParam = new("SpeedMagnitude");
-
-    [SerializeReference] public BlackboardVariable<QueueSlot> QueueSlot;
 
     // This will only be used in movement without a navigation agent.
     [SerializeReference] public BlackboardVariable<float> SlowDownDistance = new(1.0f);
@@ -69,7 +66,7 @@ public partial class AgentNavigatesToLocationWhileLookingAtQueueSlotAction : Act
             Agent.Value.transform.position = agentPosition;
 
             // Look at the QueueSlot
-            Agent.Value.transform.LookAt(QueueSlot.Value.transform.position);
+            Agent.Value.transform.LookAt(QueueBase.Value.transform.position);
         }
         else if (!m_NavMeshAgent.pathPending && m_NavMeshAgent.remainingDistance <= m_NavMeshAgent.stoppingDistance)
         {

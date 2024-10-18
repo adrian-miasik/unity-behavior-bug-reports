@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Samples/Behavior/1.0.2/Runtime Serialization/serialization-global-object-id-case.unity
     guid: 7a89880255e2246de83870fb9c1e9803
   - enabled: 1
-    path: Assets/Samples/Behavior/1.0.2/Runtime Serialization/serialization-type-construct-fail-case.unity
+    path: Assets/Samples/Behavior/1.0.2/Runtime Serialization/serialization-construct-type-error-1.0.3.unity
     guid: fe5cabc431baeda4dbf2fd2716d9821b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
