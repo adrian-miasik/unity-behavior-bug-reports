@@ -65,7 +65,7 @@ public partial class AgentNavigatesToLocationWhileLookingAtQueueBaseAction : Act
             agentPosition += toDestination * (speed * Time.deltaTime);
             Agent.Value.transform.position = agentPosition;
 
-            // Look at the QueueSlot
+            // Look at the QueueBase
             Agent.Value.transform.LookAt(QueueBase.Value.transform.position);
         }
         else if (!m_NavMeshAgent.pathPending && m_NavMeshAgent.remainingDistance <= m_NavMeshAgent.stoppingDistance)
