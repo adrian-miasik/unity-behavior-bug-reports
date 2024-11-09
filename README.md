@@ -77,7 +77,7 @@ Note: I've added a pause toggle (ESC key) so you can investigate the graph debug
 
 ---
 
-### Issue #4 - Construction Type Cast (Inheritance) - TODO UNITY TICKET
+### Issue #4 - Construction Type Cast (Inheritance) - RESOLVED IN v1.0.4
 - The forth issue is related to loading/deserializing behavior graph data back into re-created GameObjects. When clearing a variable from a behavior agent that derives from some sort of base class. And when that base class is utilized in a node action. We get as assert on deserialization. Setting the deriving Blackboard Variable (bbv) class to null, should remove all references of that variable type on every node in the behavior agent, but doesn't seem to. It seems to retain the type and try to re-construct the saved type. Normally it wouldn't/shouldn't retain the type after clearing. Though not sure entirely if it's related to inheritance/derived types, but this is how I managed to reproduce the error in `1.0.3`. 1.0.3 fixed most construct type errors I encountered, except for this specific one.
 - Error:
 ```C#
