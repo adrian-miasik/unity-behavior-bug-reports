@@ -49,7 +49,7 @@ ArgumentException: Failed to construct type. Could not resolve type from TypeNam
 
 ---
 
-### Issue #3 - Incorrect Node States Upon Deserialization: TODO UNITY TICKET
+### Issue #3 - Incorrect Node States Upon Deserialization: UNABLE TO IDENTIFY ROOT ISSUE
 - Third issue is related to loading/deserializing behavior graph data in _either_ a original/re-created GameObject.
 - No specific error, but the behavior graph is unable to progress along the branch/move on to the next node action after loading. Where if you didn't load the behavior graph, the branch would complete/move through all nodes. (E.G. provided below. Notice navigation action state)
 - Original:
@@ -77,7 +77,7 @@ Note: I've added a pause toggle (ESC key) so you can investigate the graph debug
 
 ---
 
-### Issue #4 - Construction Type Cast (Inheritance) - RESOLVED IN v1.0.4
+### Issue #4 - Construction Type Cast (Inheritance) - RESOLVED IN `v1.0.4`
 - The forth issue is related to loading/deserializing behavior graph data back into re-created GameObjects. When clearing a variable from a behavior agent that derives from some sort of base class. And when that base class is utilized in a node action. We get as assert on deserialization. Setting the deriving Blackboard Variable (bbv) class to null, should remove all references of that variable type on every node in the behavior agent, but doesn't seem to. It seems to retain the type and try to re-construct the saved type. Normally it wouldn't/shouldn't retain the type after clearing. Though not sure entirely if it's related to inheritance/derived types, but this is how I managed to reproduce the error in `1.0.3`. 1.0.3 fixed most construct type errors I encountered, except for this specific one.
 - Error:
 ```C#
